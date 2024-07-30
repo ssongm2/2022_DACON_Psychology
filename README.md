@@ -49,8 +49,8 @@ def knull(col):
     x_train[col] = a
 
 #knull(col) : null값을 knn을 사용하여 채워줍니다.
-#주의: col이 2차원인 경우에만 knn 사용 가능, (ex. Q, TIPI)
-#대체 방법: 결측치 채우고 싶은 col과 다른 col을 묶어서 사용 가능(단, 이상치 제거가 우선)
+#주의사항: col이 2차원인 경우에만 knn 사용 가능합니다.(ex. Q, TIPI)
+#대체방법: 결측치 채우고 싶은 col과 다른 col을 묶어서 사용 가능합니다.(단, 이상치 제거가 우선)
 
 knull(Answers)
 ~~~
@@ -71,10 +71,10 @@ test = test.drop(test[test.age > 120].index)
 test = test.drop(test[test.age < 4].index)
 ~~~
 
-## MODEL ✏
+## MODEL 실험 1.✏
 💫Best AUC score model💫
 
-✔Model 1,2 : ExtraTrees Regressor + Extratree Classifier
+✔Model 1,2 : ExtraTrees Regressor + ExtraTrees Classifier
 
 단일 모델로 평가해본 결과 각각 0.870, 0.748이 나왔습니다.
 모델의 정확도를 높이기 위한 방법은 다음과 같습니다.
@@ -82,13 +82,15 @@ test = test.drop(test[test.age < 4].index)
 - ExtraTrees Regressor를 교차검증과 나이브베이즈방법을 이용하여 하이퍼파라미터를 조정했습니다.
 - Extratree Classifier를 교차검증하여 0.769로 AUC가 상승하였습니다.
 
-✔Model 3: LGBM Esemble
+✔Model 3: LGBM Ensemble
 
 서로 다른 LGBM 4개를 학습시키고 Soft_voting 방법으로 앙상블 하였습니다.
+모델로 평가해본 결과 0.867이 나왔습니다.
 
+## MODEL 실험 2.✏
 💫AutoML_Pycaret💫
 
-AUC 점수가 가장 높게 측정된 모델 Best3입니다.
+자동화 도구 AutoML에서 AUC 점수가 가장 높게 측정된 모델 Best3입니다.
 |모델명|AUC|
 |:---|---:|
 |GBC(Gradient Boosting Classifier)| 0.7655|
@@ -103,3 +105,12 @@ gbc_auto = tune_model(gbc, choose_better = True)
 ens_gbc_boost = ensemble_model(gbc, method = "Boosting", fold = 5)
 blender = blend_models(best3, fold = 5)
 ~~~
+
+## 최종 MODEL 선정.✏
+💫Final model💫
+
+✔Final Model: ExtraTrees Regressor + LGBM Ensemble
+
+단일 모델로 평가 시, 성능이 좋았던 ExtraTrees Regressor과 
+LGBM 4개를 Ensemble했던 결과를 다시 앙상블 하여 최종 결과로 제출했습니다.
+최종 AUC 점수는 0.893으로 PRIVATE 47위를 달성했습니다.

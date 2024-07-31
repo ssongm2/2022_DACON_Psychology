@@ -2,7 +2,7 @@
 -------------------------------------
 설문의 답변과 개인 정보를 바탕으로 "Nerdiness" 값을 예측하는 대회입니다. (이진 분류)
 
-## EDA ✏
+## EDA 
 
 ✔칼럼 설명
 - Q1~Q26: 질문
@@ -71,8 +71,8 @@ test = test.drop(test[test.age > 120].index)
 test = test.drop(test[test.age < 4].index)
 ~~~
 
-## MODEL 실험 1.✏
-💫Best AUC score model💫
+## MODEL 실험 1
+Best AUC score model
 
 ✔Model 1,2 : ExtraTrees Regressor + ExtraTrees Classifier
 
@@ -87,8 +87,8 @@ test = test.drop(test[test.age < 4].index)
 서로 다른 LGBM 4개를 학습시키고 Soft_voting 방법으로 앙상블 하였습니다.
 모델로 평가해본 결과 0.867이 나왔습니다.
 
-## MODEL 실험 2.✏
-💫AutoML_Pycaret💫
+## MODEL 실험 2
+AutoML_Pycaret
 
 자동화 도구 AutoML에서 AUC 점수가 가장 높게 측정된 모델 Best3입니다.
 |모델명|AUC|
@@ -106,8 +106,8 @@ ens_gbc_boost = ensemble_model(gbc, method = "Boosting", fold = 5)
 blender = blend_models(best3, fold = 5)
 ~~~
 
-## 최종 MODEL 선정.✏
-💫Final model💫
+## 최종 MODEL 선정
+Final model
 
 ✔Final Model: ExtraTrees Regressor + LGBM Ensemble
 
